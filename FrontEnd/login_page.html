@@ -9,10 +9,15 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+
+    <script defer src="login.js"></script>
 </head>
 <body>
     <header>
-        <h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
+        <!--ajout d'un lien de retour à la page d'accueil-->
+        <a class="homeLink" href="index.html">
+            <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+        </a>
         <nav>
             <ul>
                 <li>projets</li>
@@ -28,12 +33,13 @@
     <h2 class="titleLogin">Log in</h2>
         <form class="displayLogin" action="#" method="post">
 			<label class="labelLogin" for="email">E-mail</label>
-			<input type="email" name="email" id="email">
+			<input type="email" name="email" id="email" required value="sophie.bluel@test.tld">
             <label class="labelLogin" for="pass">Mot de passe</label>
-			<input type="password" name="password" id="pass">
+			<input type="password" name="password" id="pass" required value="S0phie">
             <input type="submit" value="Se connecter" id="connect">
             <!--<button type="submit">Se connecter</button>-->
-            <a class="forgotPassword" href="#">Mot de passe oublié</a>
+            <a class="forgotPasswordLink" href="#">Mot de passe oublié</a>
+            <div class="errorMessage hidden"></div>
         </form>
     </div>
 </section>
@@ -47,6 +53,5 @@
 	</nav>
 </footer>
 
-<script src="login.js"></script>
 </body>
 </html>
