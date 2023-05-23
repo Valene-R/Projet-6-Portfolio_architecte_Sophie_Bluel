@@ -305,3 +305,66 @@ footer nav ul {
 .hidden {
 	display: none;
 }
+
+/**Page connectée**/
+.adminBar {
+	width: 1440px;
+	height: 59px;
+	background-color: #000000;
+	position: relative;
+	left: -152px;
+}
+
+.changes {
+	width: 216px;
+	height: 38px;
+	border-radius: 60px;
+	font-family: 'Work Sans';
+	font-size: 14px;
+	text-align: center;
+	background-color: #FFFFFF;
+	margin: 10px 536px 15px 688px;
+	border: none;
+	cursor: pointer;
+}
+
+.modeEdit svg{
+	width: 16px;
+	height: 16px;
+	fill: #FFFFFF;
+}
+
+.modeEdit {
+	position: relative;
+	top: -44px;
+	left: 560px;
+	fill: #FFFFFF;
+	color: #FFFFFF;
+	cursor: pointer;	
+}
+
+.modifyPhoto svg{
+	width: 14px;
+	height: 14px;
+}
+
+.modifyPhoto {
+	position: relative;
+    right: 1010px;
+    top: 167px;
+    margin-top: 15px;
+	cursor: pointer;
+}
+
+.modifyProjects svg {
+	width: 14px;
+	height: 14px;
+}
+
+.modifyProjects {
+	position: relative;
+	left: 666px;
+    top: -48px;
+    margin-left: 30px;
+	cursor: pointer;
+}

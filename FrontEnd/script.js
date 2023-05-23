@@ -122,7 +122,17 @@ getWorks()
 const logoutLink = document.getElementById("logoutLink");
 const loginConnect = document.querySelector(".loginConnect");
 
-// Gére le statut de connexion
+/**
+ * Gére les catégories cachées une fois l'utilisateur connecté
+ */
+function hideCategories() {
+    // const categoriesDiv déjà créée pour créer une div
+    categoriesDiv.remove();
+}
+
+/**
+ * Gére le statut de connexion
+ */
 function updateLoginStatus() {
 const token = sessionStorage.getItem("token");
 
@@ -138,13 +148,18 @@ const token = sessionStorage.getItem("token");
 
 // Si token existe (true) alors retourne "logout", si token est indéfini (false) alors retourne "login" (opérateur ternaire)
    loginConnect.textContent = token ? "logout" : "login";
+
+   if (token) {
+    // Utilisateur connecté
+    hideCategories();
+   }
 }
 
-//Ajoute un event"click" sur le lien de déconnexion
+// Ajoute un event"click" sur le lien de déconnexion
 logoutLink.addEventListener("click", () => {
-    //Supprime le token du sessionStorage
+    // Supprime le token du sessionStorage
     sessionStorage.removeItem("token");
-    //Mise à jour du sttaut de connexion
+    // Mise à jour du sttaut de connexion
     updateLoginStatus();
 });
 
