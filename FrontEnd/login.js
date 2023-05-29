@@ -53,7 +53,7 @@ form.addEventListener("submit", (event) => {
         //return console.log("identifants invalides");
         errorMessage.textContent = "Identifiants invalides"; // Afficher le message d'erreur
         errorMessage.classList.add("visible"); // Ajoute la classe pour afficher la bulle d'erreur
-        errorMessage.classList.remove("hidden");
+        errorMessage.classList.remove("hidden"); // Affiche le message d'erreur en supprimant la class
     } else {
         //redirige vers la page d'accueil  
         return window.location.href = "index.html",

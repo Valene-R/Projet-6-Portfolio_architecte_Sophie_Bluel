@@ -144,7 +144,7 @@ li:hover {
 .categories {
 	display: flex;
 	justify-content: center;
-	margin: 50px 0 50px 0;
+	margin: 0 0 50px 0;
 	gap: 10px;
 }
 /** Design des boutons des catégories**/
@@ -367,4 +367,76 @@ footer nav ul {
     top: -48px;
     margin-left: 30px;
 	cursor: pointer;
+}
+
+/** Modal **/
+.modal-dialog {
+	position: fixed;
+	width: 630px;
+	height: 731px;
+	top: 50%;
+	left: 50%;
+	border-radius: 10px;
+	background-color: #FFFFFF;
+	transform: translate(-50%, -50%);
+	overflow: auto; /* Ajoute une barre de défilement si le contenu dépasse les dimensions de la fenêtre modale */	
+}
+
+
+.modal-top {
+	display:flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	position: relative;
+	margin-top: 60px;
+}
+
+.icon-cross {
+	width: 18px;
+	position: absolute;
+	top: -46px;
+	right: 17px;
+	padding: 6px;
+	cursor: pointer;
+}
+ 
+#modal-title {
+	font-family: 'Work Sans';
+	font-size: 26px;
+	height: 30px; 
+	font-weight: 400;
+	color: #000000;
+}
+
+hr {
+	width: 420px;
+	height: 1px;
+	background-color: #B3B3B3;
+	border: none;
+}
+
+#sendPhoto {
+	width: 237px;
+	height: 36px;
+	margin-top: 38px;
+	margin-bottom: 38px;
+	cursor: pointer;
+	border: #1D6154;
+}
+
+.delete-gallery {
+	font-family: 'Syne';
+	color: #D65353;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.modal-actions {
+	display:flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-end;
+	margin-top: auto;
 }

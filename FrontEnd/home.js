@@ -1,20 +1,21 @@
-
 /////
 // CONSTANTES / VARIABLES
 /////
 
-
 // Récupération du DOM
 const worksGallery = document.querySelector(".gallery")
 
-const h2Element = document.querySelector("#portfolio h2")
-    // Création de nouveaux éléments du DOM
+
+const h2Element = document.querySelector("#portfolio > h2")
+     // Création de nouveaux éléments du DOM
 const categoriesDiv = document.createElement("div")
 categoriesDiv.className = "categories"
+
+console.log(h2Element)
+
 h2Element.insertAdjacentElement("afterend", categoriesDiv)
 
 const projectsCategories = document.querySelector(".categories")
-
 
 
 /////
@@ -103,11 +104,11 @@ const displayWorks = (dataWorks, categoryID) => {
 
             worksGallery.appendChild(works)
 
-        } 
-        
+        }    
     });
 }  
-            
+ 
+       
 
 /////
 // INITIALISATION
@@ -152,6 +153,12 @@ const token = sessionStorage.getItem("token");
    if (token) {
     // Utilisateur connecté
     hideCategories();
+    modifyProjects.classList.remove("hidden");
+    modifyPhoto.classList.remove("hidden");
+   } else {
+    // Utilisateur non connecté
+    modifyProjects.classList.add("hidden");
+    modifyPhoto.classList.add("hidden");
    }
 }
 
