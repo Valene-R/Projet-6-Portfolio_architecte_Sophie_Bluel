@@ -52,6 +52,9 @@ modifyProjects.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0
 modifyProjects.addEventListener("click", () => {
     const modalWrap = document.createElement("div");
     modalWrap.className = "modal-wrap";
+    // Ajoute la modal à l'élément body du document
+    document.body.appendChild(modalWrap);
+    
   
     // Contenu HTML de la modal
     const modalContent = `<form class="modal-dialog">
@@ -74,12 +77,26 @@ modifyProjects.addEventListener("click", () => {
     modalWrap.innerHTML = modalContent;
   
     
+  
+  const myModal = document.querySelector(".modal-dialog");
+    console.log (modalWrap);
+    console.log (myModal);
+    
     const closeModalBtn = modalWrap.querySelector(".closeModal");
     // Supprime la modal au clic du bouton de fermeture
     closeModalBtn.addEventListener("click", () => {
       modalWrap.remove();
     });
-    // Ajoute la modal à l'élément body du document
-    document.body.appendChild(modalWrap);
-  });
 
+const outsideClickModal = (event) => {
+    // Vérifie si l'élément cliqué n'est pas à l'intérieur de la modal
+    // et si l'élément cliqué n'est pas contenu dans "modifier"
+    if (!modalWrap.contains(event.target) && !modifyProjects.contains(event.target)) {
+        modalWrap.remove();
+      // Supprime l'event "click" une fois la modal fermée
+        document.removeEventListener("click", outsideClickModal);
+    }
+  };
+  // Ajoute l'event à l'ensemble du document HTML
+    document.addEventListener("click", outsideClickModal);
+});
