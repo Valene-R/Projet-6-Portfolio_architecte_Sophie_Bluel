@@ -1,4 +1,3 @@
-
 const token = sessionStorage.getItem("token");
 if (token) {
 // Récupération du DOM
@@ -52,6 +51,10 @@ modifyProjects.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0
 modifyProjects.addEventListener("click", () => {
     const modalWrap = document.createElement("div");
     modalWrap.className = "modal-wrap";
+
+    const mainElement = document.querySelector("main");
+    mainElement.className="opacity";
+    
     // Ajoute la modal à l'élément body du document
     document.body.appendChild(modalWrap);
     
@@ -65,6 +68,7 @@ modifyProjects.addEventListener("click", () => {
             </svg>
             <h2 id="modal-title">Galerie photo</h2>
         </div>
+        <div class="modal-gallery"></div>
         <div class="modal-actions">
              <hr>
              <input type="submit" value="Ajouter une photo" id="sendPhoto">
@@ -72,13 +76,50 @@ modifyProjects.addEventListener("click", () => {
         </div>
          
             </form>`;
-      
-    // Insère le contenu HTML à la div créée
-    modalWrap.innerHTML = modalContent;
-  
     
-  
-  const myModal = document.querySelector(".modal-dialog");
+function generateModal () {
+    return new Promise ((resolve, reject) => {
+        modalWrap.innerHTML = modalContent;
+        resolve({success:'ok'})
+    })
+}
+    // Appelle la fonction generateModal et effectue des opérations supplémentaires une fois que la promesse est résolue
+    generateModal().then(() => {
+        worksGallery = document.querySelector(".modal-gallery");
+        //Appelle la fonction getWorks()
+        getWorks();
+    
+        // Attend 100 millisecondes pour s'assurer que les images sont chargées
+        setTimeout(() => {
+
+        // Sélectionne toutes les balises img dans worksGallery
+        const images = worksGallery.querySelectorAll("img");
+        
+            // Pour chaque image...
+            images.forEach((element) => {
+                const trash = document.createElement("div");
+                const editLink = document.createElement("div");
+                editLink.innerHTML = '<a href="#">éditer</a>';
+                editLink.className = "edit-link"
+                trash.innerHTML = '<svg class="icon-trash" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/></svg>';
+                element.insertAdjacentElement("afterend", editLink);
+                element.insertAdjacentElement("beforebegin", trash);   
+            });
+        },
+        100)
+    });
+        
+    //modalWrap.innerHTML = modalContent;
+
+    //setTimeout(() => {
+     //   worksGallery = document.querySelectorAll(".modal-gallery");
+     //   getWorks()}, 
+     //   100)
+
+
+
+//function closeModalProjects() {}
+    const myModal = document.querySelector(".modal-dialog");
     console.log (modalWrap);
     console.log (myModal);
     
@@ -86,6 +127,7 @@ modifyProjects.addEventListener("click", () => {
     // Supprime la modal au clic du bouton de fermeture
     closeModalBtn.addEventListener("click", () => {
       modalWrap.remove();
+      mainElement.classList.remove("opacity")
     });
 
 const outsideClickModal = (event) => {
@@ -95,8 +137,12 @@ const outsideClickModal = (event) => {
         modalWrap.remove();
       // Supprime l'event "click" une fois la modal fermée
         document.removeEventListener("click", outsideClickModal);
+        mainElement.classList.remove("opacity")
     }
   };
-  // Ajoute l'event à l'ensemble du document HTML
-    document.addEventListener("click", outsideClickModal);
+        // Ajoute l'event à l'ensemble du document HTML
+        document.addEventListener("click", outsideClickModal);
 });
+
+
+

@@ -3,7 +3,7 @@
 /////
 
 // Récupération du DOM
-const worksGallery = document.querySelector(".gallery")
+let worksGallery = document.querySelector(".gallery")
 
 
 const h2Element = document.querySelector("#portfolio > h2")
@@ -102,7 +102,7 @@ const displayWorks = (dataWorks, categoryID) => {
                 <figcaption>${element.title}</figcaption>
                 </figure>`
 
-            worksGallery.appendChild(works)
+            worksGallery.appendChild(works);
 
         }    
     });
