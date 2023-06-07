@@ -96,11 +96,15 @@ const displayWorks = (dataWorks, categoryID) => {
     //Affiche les nouveaux travaux
     dataWorks.forEach(element => {
         if(categoryID === null || element.categoryId === categoryID){
-            const works = document.createElement("div")
+            const works = document.createElement("div");
+
+            // Définit l'attribut 'data-work-id' de l'élément 'works' sur l'ID du travail en cours 
+            works.setAttribute("data-work-id", element.id);
+
             works.innerHTML = `<figure>
                 <img src = "${element.imageUrl}">
                 <figcaption>${element.title}</figcaption>
-                </figure>`
+                </figure>`;
 
             worksGallery.appendChild(works);
 
@@ -137,16 +141,6 @@ function hideCategories() {
 function updateLoginStatus() {
 const token = sessionStorage.getItem("token");
 
-    //Si token présent dans la sessionStorage, affiche "logout"
-    // if (token) {
-    //     loginConnect.textContent = "logout"; 
-    //        loginConnect.href = "index.html"    
-    // //sinon, affiche "login"
-    // } else {
-    //     loginConnect.textContent = "login";
-    //     loginConnect.href = "#"
-// }
-
 // Si token existe (true) alors retourne "logout", si token est indéfini (false) alors retourne "login" (opérateur ternaire)
    loginConnect.textContent = token ? "logout" : "login";
 
@@ -166,9 +160,10 @@ const token = sessionStorage.getItem("token");
 logoutLink.addEventListener("click", () => {
     // Supprime le token du sessionStorage
     sessionStorage.removeItem("token");
-    // Mise à jour du sttaut de connexion
+    // Mise à jour du statut de connexion
     updateLoginStatus();
 });
 
 // Appelle la fonction updateLoginStatus() lors du chargement de la page
 document.addEventListener("DOMContentLoaded", updateLoginStatus);
+

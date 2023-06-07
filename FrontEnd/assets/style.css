@@ -292,14 +292,18 @@ footer nav ul {
 .visible {
 	border: 2px solid red;
 	border-radius: 25px;
-	width: 170px;
-	height: 25px;
+	width: 314px;
+	height: 26px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	position: absolute;
-	bottom:280px;
-	left: 632px;
+	/* position: absolute;
+	bottom:223px;
+	left: 559px; */
+	position: relative;
+    bottom: 121px;
+    left: 31px;
+
 }
 
 .hidden {
@@ -417,13 +421,18 @@ hr {
 	border: none;
 }
 
-#sendPhoto {
+#sendPhoto, #validPhoto {
 	width: 237px;
 	height: 36px;
 	margin-top: 38px;
 	margin-bottom: 23px;
 	cursor: pointer;
 	border: #1D6154;
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	border-radius: 60px;
 }
 
 .delete-gallery {
@@ -463,11 +472,6 @@ hr {
     margin: 46px 105px 47px 105px;
 }
 
-.opacity {
-	opacity: 0.25;
-	cursor: pointer;
-}
-
 .edit-link a{
 	text-decoration: none;
 	color: #000000;
@@ -484,5 +488,99 @@ hr {
 	background-color: #000000;
 	border-radius: 2px;
 	border: 4px solid;
+	cursor: pointer;
 }
 
+.icon-arrow {
+	fill: #000000;
+	width: 21px;
+	height: 14px;
+	position: absolute;
+    left: 30px;
+    top: -32px;
+	cursor: pointer;
+}
+
+.display {
+	display: none;
+}
+
+/** Applique un assombrissement de la page **/
+body.opacity::before {
+	content: ""; /**même vide pour que la pseudo-classe s'affiche correctement et occupe tout l'écran**/
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+/** Pour que l'assombrissement ne s'applique pas **/
+.adminBar {
+	position: relative;
+	z-index: 9999;
+}
+
+/** Pour que l'assombrissement ne s'applique pas **/
+.modal-dialog {
+	z-index: 9999; 
+}
+
+.container-photo {
+	width: 420px;
+	height: 169px;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	border: 100px;
+	background: #E8F1F7;
+	border-radius: 3px;
+	justify-content: space-evenly;
+	align-items: center;
+	margin-top: 36px;
+}
+
+#addPhoto {
+	width: 173px;
+	height: 36px;
+	background-color: #CBD6DC;
+	border-radius: 50px;
+	border: none;
+	color: #306685;
+	cursor: pointer;
+}
+
+.chooseFile {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+  	cursor: pointer;
+}
+
+.picture {
+	display: flex;
+	justify-content: center;
+}
+
+.titleCategoryPhoto{
+	display: flex;
+	flex-direction: column;
+	margin: 9px 0 47px 0;
+}
+
+.titlePhoto, .categoryphoto {
+	width: 32px;
+	height: 16px;
+	color: #3D3D3D;
+	font-size: 12px;
+	padding: 21px 0 10px 0;
+}
+
+#cat, #title {
+	width: 420px;
+	height: 51px;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	border: none;	
+}

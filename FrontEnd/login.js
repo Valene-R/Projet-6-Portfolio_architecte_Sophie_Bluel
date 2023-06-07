@@ -21,7 +21,7 @@ const errorMessage = document.querySelector(".errorMessage")
 
 //ajoute un event "submit" du formulaire
 form.addEventListener("submit", (event) => {
-  event.preventDefault();//empêcher le comportement par défaut du formulaire qui est de recharger la page
+  event.preventDefault();// Empêche le comportement par défaut du formulaire qui est de recharger la page
 
   //récupére les valeurs id des champs de formulaire
   const formEmail = document.getElementById("email").value;
@@ -51,8 +51,8 @@ form.addEventListener("submit", (event) => {
       // condition pour validation ou non des identifiants de connexion
     if (!token) {
         //return console.log("identifants invalides");
-        errorMessage.textContent = "Identifiants invalides"; // Afficher le message d'erreur
-        errorMessage.classList.add("visible"); // Ajoute la classe pour afficher la bulle d'erreur
+        errorMessage.textContent = "Erreur dans l'identifiant ou le mot de passe"; // Afficher le message d'erreur
+        errorMessage.classList.add("visible"); // Ajoute la class pour afficher la bulle d'erreur
         errorMessage.classList.remove("hidden"); // Affiche le message d'erreur en supprimant la class
     } else {
         //redirige vers la page d'accueil  
@@ -69,16 +69,3 @@ form.addEventListener("input", () => {
     //ajoute la class "hidden" pour masquer le message d'erreur
     errorMessage.classList.add("hidden");
 });
-
-
-
-// const apiURL =  "http://localhost:5678/api/users/login"
-
-// const response = await fetch(apiURL, {
-//   method: 'POST',
-//   headers: {
-//       'Content-type': 'application/json',
-//       'Authorization': `Bearer ${token}`, // notice the Bearer before your token
-//   },
-//   body: JSON.stringify(yourNewData)
-// })
