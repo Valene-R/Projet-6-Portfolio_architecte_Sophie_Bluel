@@ -249,6 +249,11 @@ footer nav ul {
 	flex-direction: column;
 }
 
+.bold-black {
+	font-weight: bold;
+	color: #000000;
+}
+
 .forgotPasswordLink {
 	display: flex;
 	justify-content: center;
@@ -414,17 +419,17 @@ footer nav ul {
 	color: #000000;
 }
 
-hr {
+.line-modal2 {
 	width: 420px;
 	height: 1px;
 	background-color: #B3B3B3;
 	border: none;
+	margin-top: 47px;
 }
 
 #sendPhoto, #validPhoto {
 	width: 237px;
 	height: 36px;
-	margin-top: 38px;
 	margin-bottom: 23px;
 	cursor: pointer;
 	border: #1D6154;
@@ -472,6 +477,14 @@ hr {
     margin: 46px 105px 47px 105px;
 }
 
+.line-modal1 {
+	width: 420px;
+	height: 1px;
+	background-color: #B3B3B3;
+	border: none;
+	margin: 47px 105px 38px 105px;	
+}
+
 .edit-link a{
 	text-decoration: none;
 	color: #000000;
@@ -479,16 +492,38 @@ hr {
 }
 
 .icon-trash {
-	height: 9px;
-	width: 9px;
-	fill: #FFFFFF;
-	z-index: 9999;
 	position: absolute;
-	margin: 7px 5px 0 55px;
-	background-color: #000000;
-	border-radius: 2px;
-	border: 4px solid;
-	cursor: pointer;
+  	top: 7px;
+  	left: 56px;
+  	fill: #FFFFFF;
+  	background-color: #000000;
+  	border-radius: 2px;
+  	border: 4px solid;
+  	width: 9px;
+  	height: 9px;
+  	cursor: pointer;
+}
+
+
+.btn-trash {
+	position: absolute;
+  	background-color: transparent;
+  	border: none;
+  	padding: 0;
+ 	cursor: pointer;
+}
+
+.modal-dialog2{
+	position: fixed;
+	width: 630px;
+	height: 731px;
+	top: 50%;
+	left: 50%;
+	border-radius: 10px;
+	background-color: #FFFFFF;
+	transform: translate(-50%, -50%);
+	overflow: auto; /* Ajoute une barre de défilement si le contenu dépasse les dimensions de la fenêtre modale */	
+	/* z-index: 9999 */
 }
 
 .icon-arrow {
@@ -552,11 +587,22 @@ body.opacity::before {
 }
 
 .chooseFile {
-	position: absolute;
+	position: absolute; 
 	width: 100%;
 	height: 100%;
 	opacity: 0;
   	cursor: pointer;
+}
+
+#image {
+	position: absolute;
+	width: 20%;
+    height: 27%;
+    top: 20px;
+}
+
+.photoLabel {
+	z-index: -1;
 }
 
 .picture {
@@ -564,10 +610,10 @@ body.opacity::before {
 	justify-content: center;
 }
 
-.titleCategoryPhoto{
+.titleCategoryPhoto {
 	display: flex;
 	flex-direction: column;
-	margin: 9px 0 47px 0;
+	margin: 9px 105px 47px 105px;
 }
 
 .titlePhoto, .categoryphoto {
@@ -584,3 +630,4 @@ body.opacity::before {
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 	border: none;	
 }
+

@@ -77,8 +77,8 @@ const displayCategories = (dataCategories) => {
 /**
  * Récupère la liste des projets
  */
-const getWorks = (categoryID = null) => { 
-    fetch("http://localhost:5678/api/works")
+async function getWorks(categoryID = null) { 
+    return await fetch("http://localhost:5678/api/works")
         .then(response => response.json())
         .then(dataWorks => {
             displayWorks(dataWorks, categoryID);
@@ -139,7 +139,15 @@ function hideCategories() {
  * Gére le statut de connexion
  */
 function updateLoginStatus() {
+    
 const token = sessionStorage.getItem("token");
+const modifyProjects = document.querySelector(".modifyProjects");
+const modifyPhotos = document.querySelector(".modifyPhoto");
+
+
+
+    console.log("Modify Projects element", modifyProjects);
+    console.log("Modify Photos element", modifyPhotos);
 
 // Si token existe (true) alors retourne "logout", si token est indéfini (false) alors retourne "login" (opérateur ternaire)
    loginConnect.textContent = token ? "logout" : "login";
@@ -148,12 +156,10 @@ const token = sessionStorage.getItem("token");
     // Utilisateur connecté
     hideCategories();
     modifyProjects.classList.remove("hidden");
-    modifyPhoto.classList.remove("hidden");
-   } else {
-    // Utilisateur non connecté
-    modifyProjects.classList.add("hidden");
-    modifyPhoto.classList.add("hidden");
-   }
+    modifyPhotos.classList.remove("hidden");
+    // Ajoute une class pour caractère gras noir 
+    logoutLink.classList.add("bold-black");
+}
 }
 
 // Ajoute un event"click" sur le lien de déconnexion
@@ -166,4 +172,3 @@ logoutLink.addEventListener("click", () => {
 
 // Appelle la fonction updateLoginStatus() lors du chargement de la page
 document.addEventListener("DOMContentLoaded", updateLoginStatus);
-
