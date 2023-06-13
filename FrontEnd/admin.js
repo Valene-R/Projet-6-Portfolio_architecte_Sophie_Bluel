@@ -75,7 +75,9 @@ if (token) {
             
                 </div>`;
             document.body.appendChild(modalContent);
-            const sendPhotoInput = document.getElementById("sendPhoto");
+            
+            const sendPhotoInput = document.querySelector("#sendPhoto");
+            // const sendPhotoInput = document.getElementById("sendPhoto");
             closeModalBtn = modalContent.querySelector(".closeModal");
 
             modalGallery();
@@ -91,6 +93,7 @@ if (token) {
     }
     openModal();
 
+
 //// Affichage de la galerie dans la modale ////
     function modalGallery() {
         // Récupération de la galerie
@@ -100,6 +103,7 @@ if (token) {
             const images = worksGallery.querySelectorAll("img");
             // Pour chaque image...
             images.forEach((image, index) => {
+
                 // Ajout du lien d'édition
                 const editLink = document.createElement("div");
                 editLink.innerHTML = '<a href="#">éditer</a>';
@@ -109,14 +113,45 @@ if (token) {
 
                 // Ajout des boutons de suppression "poubelles"
                 const deleteContainer = document.createElement("div");
-                deleteContainer.innerHTML = `<button class="btn-trash">
+                deleteContainer.classList.add("move-delete");
+                deleteContainer.innerHTML = `<div class="move">
+                    <button class="btn-move">
+                    <svg class="icon-move" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                        <path d="M278.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-64 64c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l9.4-9.4V224H109.3l9.4-9.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-64 64c-12.5 12.5-12.5 32.8 0 45.3l64 64c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-9.4-9.4H224V402.7l-9.4-9.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l64 64c12.5 12.5 32.8 12.5 45.3 0l64-64c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-9.4 9.4V288H402.7l-9.4 9.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l64-64c12.5-12.5 12.5-32.8 0-45.3l-64-64c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l9.4 9.4H288V109.3l9.4 9.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-64-64z"/>
+                        </svg>
+                    </button>
+                    </div>
+                    <div class="delete">
+                    <button class="btn-trash">
                     <svg class="icon-trash" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
-                    <path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/>
-                    </svg>
-                    </button>`;
+                       <path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/>
+                        </svg>
+                    </button>
+                    </div>`;
                 // Insertion de deleteContainer juste avant l'élément image
-                image.insertAdjacentElement("beforebegin", deleteContainer); 
+                image.insertAdjacentElement("beforebegin", deleteContainer);
+    
+                    // Cache le bouton de déplacement au départ
+                    const moveButton = deleteContainer.querySelector(".move");
+                    moveButton.style.opacity = 0;
+
+                    // Gestion des événements de souris pour afficher/masquer le bouton de déplacement
+                    function showMoveButton() {
+                        moveButton.style.opacity = 1;
+                    };
+
+                    function hideMoveButton() {
+                        moveButton.style.opacity = 0;
+                    };
+
+                    // Gestion des écouteurs d'événements de souris à l'image, au bouton et à la div de déplacement
+                    image.addEventListener("mouseover", showMoveButton);
+                    image.addEventListener("mouseout", hideMoveButton);
+                    moveButton.addEventListener("mouseover", showMoveButton);
+                    moveButton.addEventListener("mouseout", hideMoveButton);
+
                 deleteImage(deleteContainer, index);  
+
             });
         });
     }
@@ -147,8 +182,7 @@ if (token) {
                 </svg>
                 <h2 id="modal-title">Ajout Photo</h2>
             </div>
-            <div class="form-title-category">
-                <form class="titleCategoryPhoto" action="index.html" method="post">
+                <form class="titleCategoryPhoto" action="" method="">
                     <div class="container-photo">
                         <svg class="picture" width="58" height="46" viewBox="0 0 58 46" xmlns="http://www.w3.org/2000/svg"><path d="M57 0H1C0.448 0 0 0.447 0 1V45C0 45.553 0.448 46 1 46H57C57.552 46 58 45.553 58 45V1C58 0.447 57.552 0 57 0ZM56 44H2V2H56V44Z" fill="#B9C5CC"/>
                             <path d="M16 22.138C19.071 22.138 21.569 19.64 21.569 16.57C21.569 13.498 19.071 11 16 11C12.929 11 10.431 13.498 10.431 16.569C10.431 19.64 12.929 22.138 16 22.138ZM16 13C17.968 13 19.569 14.602 19.569 16.569C19.569 18.536 17.968 20.138 16 20.138C14.032 20.138 12.431 18.537 12.431 16.57C12.431 14.603 14.032 13 16 13Z" fill="#B9C5CC"/>
@@ -156,30 +190,63 @@ if (token) {
                         </svg>
                         <label class="photoLabel" for="photoInput"></label>
                         <input class="chooseFile" type="file" id="photoInput" accept="image/*" onchange="previewFile()">
-                        <img id="image" src="" alt="Aperçu de l'image">
+                        <img id="image">
                         <button id="addPhoto" type="button">+ Ajouter photo</button>
-                        <p>jpg, png : 4mo max</p>
+                        <p id="file-size-info">jpg, png : 4mo max</p>
                     </div>
                     <label class="titlePhoto" for="title">Titre</label>
                     <input type="text" name="title" id="title" required>
                     <label class="categoryphoto" for="cat">Catégorie</label>
-                    <select id="cat" required>
-                        <option value="cat1">cat1</option>
-                    </select>
+                    <select id="cat" required></select>
                     <hr class="line-modal2">
                     <input type="submit" value="Valider" id="validPhoto">
                 </form>
-            </div>
                 
             </div>`;
+
+            // Ajout des catégories pour assigner une catégorie à la nouvelle image
+            getCategories().then((elements) => {
+                const categoriesDropdown = elements;
+                categoriesDropdown.forEach((element) => {
+                  document.getElementById("cat").innerHTML += `<option value="${element.id}">${element.name}</option>`;
+                });
+            });
+
+
             document.body.appendChild(modalContent);
             closeModalBtn = modalContent.querySelector(".closeModal");
             const modalBackArrow = modalContent.querySelector(".icon-arrow");
+            const sendNewWork = modalContent.querySelector("#validPhoto");
+            //const sendNewWork = modalContent.getElementById("validPhoto");
 
             closeModal(closeModalBtn);
             backModalEdit(modalBackArrow);
-
+            addImage(sendNewWork);
         });
+    }
+
+//// Insertion d'une nouvelle photo ////
+    function previewFile() {
+        const preview = document.getElementById("image");
+        const file = document.getElementById("photoInput").files[0];
+        const addBtn = document.getElementById("addPhoto");
+        const fileSizeInfo = document.getElementById("file-size-info");
+        const reader = new FileReader();
+
+        reader.addEventListener("load", function() {
+           // Convertit le fichier image en une chaîne de caractères base64
+           preview.src = reader.result;
+        }, false);
+
+        if (file) {
+            addBtn.style.display = "none";
+            fileSizeInfo.style.display = "none";
+            reader.readAsDataURL(file);
+        }
+
+        const inputPhoto = document.getElementById("photoInput");
+        // Ajout d'un écouteur d'événement "change" pour la séléction de fichier lorsque files change
+        inputPhoto.addEventListener("change", previewFile);
     }
 
 //// Retour à modalEdit ////
@@ -203,7 +270,7 @@ if (token) {
                 !modifyProjects.contains(event.target)
               ) {
                 modalContent.remove();
-                // Supprime l'event "click" une fois la modal fermée
+                // Supprime l'event "click" une fois la modale fermée
                 document.removeEventListener("click", outsideClickModal);
                 bodyElement.classList.remove("opacity");
             }
@@ -225,6 +292,31 @@ async function deleteWorks(workId) {
         });
     }
 
+// API Ajout d'une image
+async function addImage(sendNewWork) {
+    sendNewWork.addEventListener("click", async (e) => {
+
+            // Récupération des valeurs des champs du formulaire
+            const imageFile = document.getElementById("photoInput").files[0];
+            const title = document.getElementById("title").value;
+            const category = document.getElementById("cat").value;
+
+            const formData = new FormData();
+            formData.append("image", imageFile);
+            formData.append("title", title);
+            formData.append("category", category);
+
+            return await fetch(`http://localhost:5678/api/works`, {
+                method: "POST",
+                headers: {
+                    "Authorization" : `Bearer ${token}`
+                },
+                body: formData        
+            })
+            .then(response => response.json())
+            .catch(error => console.log(error))
+    });
+};
 
 
 

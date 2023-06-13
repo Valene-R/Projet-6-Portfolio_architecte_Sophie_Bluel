@@ -27,11 +27,12 @@ const projectsCategories = document.querySelector(".categories")
 /**
  *  Récupère les catégories
  */
-const getCategories = () => {
-    fetch("http://localhost:5678/api/categories")
+async function getCategories() {
+    return await fetch("http://localhost:5678/api/categories")
        .then(response => response.json())
        .then(dataCategories => {
-          displayCategories(dataCategories);
+            displayCategories(dataCategories);
+            return dataCategories;
         });
 }
 
