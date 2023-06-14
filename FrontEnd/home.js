@@ -3,51 +3,30 @@
 /////
 
 // Récupération du DOM
-let worksGallery = document.querySelector(".gallery")
+let worksGallery = document.querySelector(".gallery");
+const h2Element = document.querySelector("#portfolio > h2");
+const logoutLink = document.getElementById("logoutLink");
+const loginConnect = document.querySelector(".loginConnect");
 
+// Création de nouveaux éléments du DOM
+const categoriesDiv = document.createElement("div");
 
-const h2Element = document.querySelector("#portfolio > h2")
-     // Création de nouveaux éléments du DOM
-const categoriesDiv = document.createElement("div")
-categoriesDiv.className = "categories"
+//// Gestion des catégories ////
 
-console.log(h2Element)
+// Ajout des catégories
+categoriesDiv.classList.add("categories");
+h2Element.insertAdjacentElement("afterend", categoriesDiv);
+const projectsCategories = document.querySelector(".categories");
 
-h2Element.insertAdjacentElement("afterend", categoriesDiv)
-
-const projectsCategories = document.querySelector(".categories")
-
-
-/////
-// FONCTIONS
-/////
-
-
-
-/**
- *  Récupère les catégories
- */
-async function getCategories() {
-    return await fetch("http://localhost:5678/api/categories")
-       .then(response => response.json())
-       .then(dataCategories => {
-            displayCategories(dataCategories);
-            return dataCategories;
-        });
-}
-
-/**
- * Affiche les catégories
- */
-const displayCategories = (dataCategories) => {
-
+// Affichage des catégories
+function displayCategories(dataCategories) {
     // Ajout du bouton "tous" dans projectsCategories
-    const allCategories = document.createElement("button")
-    allCategories.innerHTML = `Tous`
+    const allCategories = document.createElement("button");
+    allCategories.innerHTML = `Tous`;
     //ajout de 2 class all-category et buttonCategory
-    allCategories.classList.add("all-category", "buttonCategory")
+    allCategories.classList.add("all-category", "buttonCategory");
     
-    projectsCategories.appendChild(allCategories)
+    projectsCategories.appendChild(allCategories);
 
     // Event au clic sur le bouton Tous
     allCategories.addEventListener("click", () => {
@@ -55,41 +34,26 @@ const displayCategories = (dataCategories) => {
         getWorks(null);
     });
 
-    // Boucle sur categories
+    // Ajout des catégories retournées par l'API
     dataCategories.forEach(element => {
-
-        // Ajout de l'élément dans projectsCategories
-        const btnCategory = document.createElement("button")
-        // ajout de la class buttonCategory 
-        btnCategory.classList.add("buttonCategory")
-        btnCategory.innerHTML = `${element.name}`
+        const btnCategory = document.createElement("button"); 
+        btnCategory.classList.add("buttonCategory");
+        btnCategory.innerHTML = `${element.name}`;
 
         // Ajout au DOM
-        projectsCategories.appendChild(btnCategory)
+        projectsCategories.appendChild(btnCategory);
 
-        // Event au clic sur le bouton
         btnCategory.addEventListener("click", () => {
-            getWorks(element.id)
+            getWorks(element.id);
         });
     });
 }
 
 
-/**
- * Récupère la liste des projets
- */
-async function getWorks(categoryID = null) { 
-    return await fetch("http://localhost:5678/api/works")
-        .then(response => response.json())
-        .then(dataWorks => {
-            displayWorks(dataWorks, categoryID);
-        });
-}
+//// Gestion des projets ////
 
-/**
- * Affiche la liste des projets
- */
-const displayWorks = (dataWorks, categoryID) => {
+// Affichage de la liste des projets
+function displayWorks(dataWorks, categoryID) {
 
     //Réinitialise la liste des projets
     worksGallery.innerHTML = '';
@@ -111,65 +75,45 @@ const displayWorks = (dataWorks, categoryID) => {
 
         }    
     });
-}  
- 
-       
+} 
 
-/////
-// INITIALISATION
-/////
+// Gestion du statut de connexion
+    function updateLoginStatus() {
+        const token = sessionStorage.getItem("token");
 
-getCategories()
-getWorks()
-
-
-
-// Récupération du DOM
-const logoutLink = document.getElementById("logoutLink");
-const loginConnect = document.querySelector(".loginConnect");
-
-/**
- * Gére les catégories cachées une fois l'utilisateur connecté
- */
-function hideCategories() {
-    // const categoriesDiv déjà créée pour créer une div
-    categoriesDiv.remove();
-}
-
-/**
- * Gére le statut de connexion
- */
-function updateLoginStatus() {
-    
-const token = sessionStorage.getItem("token");
-const modifyProjects = document.querySelector(".modifyProjects");
-const modifyPhotos = document.querySelector(".modifyPhoto");
-
-
-
-    console.log("Modify Projects element", modifyProjects);
-    console.log("Modify Photos element", modifyPhotos);
-
-// Si token existe (true) alors retourne "logout", si token est indéfini (false) alors retourne "login" (opérateur ternaire)
-   loginConnect.textContent = token ? "logout" : "login";
-
-   if (token) {
-    // Utilisateur connecté
-    hideCategories();
-    modifyProjects.classList.remove("hidden");
-    modifyPhotos.classList.remove("hidden");
-    // Ajoute une class pour caractère gras noir 
-    logoutLink.classList.add("bold-black");
-}
-}
-
-// Ajoute un event"click" sur le lien de déconnexion
-logoutLink.addEventListener("click", () => {
-    // Supprime le token du sessionStorage
-    sessionStorage.removeItem("token");
-    // Mise à jour du statut de connexion
-    updateLoginStatus();
-});
-
+        if (token && token !== "undefined") {
+            loginConnect.textContent = "logout";
+            logoutLink.classList.add("bold-black");
+        }
+        else {
+            loginConnect.textContent = "login";
+        }
+    }
 // Appelle la fonction updateLoginStatus() lors du chargement de la page
 document.addEventListener("DOMContentLoaded", updateLoginStatus);
+
+
+//// Appels API ////
+
+// Récupération API des catégories
+async function getCategories() {
+    return await fetch("http://localhost:5678/api/categories")
+    .then(response => response.json())
+    .then(dataCategories => {
+        displayCategories(dataCategories);
+        return dataCategories;
+    });
+}
+getCategories()
+
+// Récupération API des projets
+async function getWorks (categoryID = null)  { 
+    return await fetch("http://localhost:5678/api/works")
+    .then(response => response.json())
+    .then(dataWorks => {
+            displayWorks(dataWorks, categoryID);
+            return dataWorks;
+        });
+};
+getWorks()
+
