@@ -331,11 +331,10 @@ if (token && token !== "undefined") {
         const checkTitle = document.getElementById("title").value;
         const checkCategory = document.getElementById("cat").value;
         const checkImageFile = document.getElementById("photoInput").files[0];
-        const validPhotoButton = document.getElementById("validPhoto");
 
         if(checkTitle.length > 0 && checkCategory && checkImageFile) {
-            validPhotoButton.classList.add("valid-button-green");  
-        } 
+            document.getElementById("validPhoto").classList.add("valid-button-green");  
+        }
     }
 
 /**
@@ -413,7 +412,7 @@ if (token && token !== "undefined") {
                 document.getElementById("image").src = "",
                 document.getElementById("addPhoto").style ="",
                 document.getElementById("file-size-info").style = "",
-                document.getElementById("validPhoto").style.backgroundColor = "grey";
+                document.getElementById("validPhoto").classList.remove("valid-button-green");
             }
         });
     };
