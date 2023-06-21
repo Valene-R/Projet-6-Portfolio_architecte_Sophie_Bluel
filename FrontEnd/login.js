@@ -16,9 +16,6 @@ const errorMessage = document.querySelector(".errorMessage")
  */
 
 
-
-
-
 //ajoute un event "submit" du formulaire
 form.addEventListener("submit", (event) => {
   event.preventDefault();// Empêche le comportement par défaut du formulaire qui est de recharger la page

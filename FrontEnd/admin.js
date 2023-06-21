@@ -18,6 +18,7 @@ const modifyProjects = document.createElement("a");
 const modalContent = document.createElement("div");
 let closeModalBtn = null;
 
+
 if (token && token !== "undefined") {
 
 //// Création du front admin ////
@@ -58,16 +59,36 @@ if (token && token !== "undefined") {
     categoriesElement.insertAdjacentElement("beforebegin", modifyProjects);
 
 
-//// Désafficher les catégories ////
+/**
+ * Désaffichage des catégories
+ */ 
     function hideCategories() {
         categoriesDiv.remove();
     }
-    hideCategories();
+    hideCategories();  
 
-//// Création de la modale ////
+
+/**
+ * Loader 
+ */ 
+    function showLoader() {
+        const loaderContainer = document.querySelector(".loader-container");
+        loaderContainer.style.display = "block";
+    }
+
+
+/**
+ * Création de la modale
+ */ 
     function modalEdit() {
             bodyElement.classList.add("opacity");
             modalContent.innerHTML = `<div class="modal-dialog"> 
+            <div class="loader-container">
+                <div class="loader"></div>
+                <div class="loading-text">Loading
+                    <span id="loading-dots"></span>
+                </div>
+            </div>
 
             <div class="modal-top">
                 <svg class="icon-cross closeModal" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
@@ -94,7 +115,10 @@ if (token && token !== "undefined") {
             addNewPhoto(sendPhotoInput);
     }
 
-//// Ouverture de la galerie dans la modale ////
+
+/**
+ * Ouverture de la galerie dans la modale
+ */ 
     function openModal() {
         modifyProjects.addEventListener("click", () => {
             modalEdit();
@@ -103,7 +127,9 @@ if (token && token !== "undefined") {
     openModal();
 
 
-//// Affichage de la galerie dans la modale ////
+/**
+ * Affichage de la galerie dans la modale 
+ */ 
     function modalGallery() {
         // Récupération de la galerie
         worksGallery = document.querySelector(".modal-gallery");
@@ -111,14 +137,14 @@ if (token && token !== "undefined") {
         getWorks().then(() => {
             const images = worksGallery.querySelectorAll("img");
             // Pour chaque image...
-            images.forEach((image, index) => {
+            images.forEach((element, index) => {
 
                 // Ajout du lien d'édition
                 const editLink = document.createElement("div");
                 editLink.innerHTML = '<a href="#">éditer</a>';
                 editLink.classList.add("edit-link");
                 // Insertion de editLink juste après l'élément image
-                image.insertAdjacentElement("afterend", editLink);
+                element.insertAdjacentElement("afterend", editLink);
 
                 // Ajout des boutons de suppression "poubelles"
                 const deleteContainer = document.createElement("div");
@@ -138,7 +164,7 @@ if (token && token !== "undefined") {
                     </button>
                     </div>`;
                 // Insertion de deleteContainer juste avant l'élément image
-                image.insertAdjacentElement("beforebegin", deleteContainer);
+                element.insertAdjacentElement("beforebegin", deleteContainer);
     
                     // Cache le bouton de déplacement au départ
                     const moveButton = deleteContainer.querySelector(".move");
@@ -154,32 +180,48 @@ if (token && token !== "undefined") {
                     };
 
                     // Gestion des écouteurs d'événements de souris à l'image, au bouton et à la div de déplacement
-                    image.addEventListener("mouseover", showMoveButton);
-                    image.addEventListener("mouseout", hideMoveButton);
+                    element.addEventListener("mouseover", showMoveButton);
+                    element.addEventListener("mouseout", hideMoveButton);
                     moveButton.addEventListener("mouseover", showMoveButton);
                     moveButton.addEventListener("mouseout", hideMoveButton);
-
+                    
                 deleteImage(deleteContainer, index);  
 
             });
         });
     }
 
-//// Suppression d'une image ////
+
+/**
+ * Suppression d'une image
+ */ 
     function deleteImage(deleteContainer, index) {
-        deleteContainer.querySelector(".btn-trash").addEventListener("click", () => {
+        deleteContainer.querySelector(".btn-trash").addEventListener("click", async () => {
             const worksId = worksGallery.querySelectorAll("[data-work-id]");
             const workId = worksId[index].getAttribute("data-work-id");
-            deleteWorks(workId);
+            const removeModal = worksId[index];
+            const removeGallery = document.querySelector(`div[data-work-id="${workId}"]`);
+
+            return await fetch(`http://localhost:5678/api/works/${workId}`, {
+                method: "DELETE",
+                headers: {
+                    "Accept": `*/*`,
+                    "Authorization": `Bearer ${token}`
+                }
+            }),
+            
+            removeModal.remove(),
+            removeGallery.remove();
         });
     }
+      
 
-
-//// Modal d'ajout d'une nouvelle photo ////
+/**
+ * Modal d'ajout d'une nouvelle photo
+ */  
     function addNewPhoto(sendPhotoInput) {
         sendPhotoInput.addEventListener("click", (e) => {
             e.stopPropagation();
-
             modalContent.innerHTML = `<div class="modal-dialog"> 
         
             <div class="modal-top">
@@ -191,36 +233,42 @@ if (token && token !== "undefined") {
                 </svg>
                 <h2 id="modal-title">Ajout Photo</h2>
             </div>
-                <form class="titleCategoryPhoto" action="" method="">
+                <form class="titleCategoryPhoto" id="photoForm" action="" method="">
                     <div class="container-photo">
                         <svg class="picture" width="58" height="46" viewBox="0 0 58 46" xmlns="http://www.w3.org/2000/svg"><path d="M57 0H1C0.448 0 0 0.447 0 1V45C0 45.553 0.448 46 1 46H57C57.552 46 58 45.553 58 45V1C58 0.447 57.552 0 57 0ZM56 44H2V2H56V44Z" fill="#B9C5CC"/>
                             <path d="M16 22.138C19.071 22.138 21.569 19.64 21.569 16.57C21.569 13.498 19.071 11 16 11C12.929 11 10.431 13.498 10.431 16.569C10.431 19.64 12.929 22.138 16 22.138ZM16 13C17.968 13 19.569 14.602 19.569 16.569C19.569 18.536 17.968 20.138 16 20.138C14.032 20.138 12.431 18.537 12.431 16.57C12.431 14.603 14.032 13 16 13Z" fill="#B9C5CC"/>
                             <path d="M7.00004 40C7.23404 40 7.47004 39.918 7.66004 39.751L23.973 25.389L34.275 35.69C34.666 36.081 35.298 36.081 35.689 35.69C36.08 35.299 36.08 34.667 35.689 34.276L30.882 29.469L40.063 19.415L51.324 29.738C51.731 30.111 52.364 30.083 52.737 29.676C53.11 29.269 53.083 28.636 52.675 28.263L40.675 17.263C40.479 17.084 40.218 16.995 39.955 17.001C39.69 17.013 39.44 17.13 39.261 17.326L29.467 28.053L24.724 23.31C24.35 22.937 23.752 22.918 23.356 23.266L6.33904 38.249C5.92404 38.614 5.88404 39.246 6.24904 39.661C6.44704 39.886 6.72304 40 7.00004 40Z" fill="#B9C5CC"/>
                         </svg>
                         <label class="photoLabel" for="photoInput"></label>
-                        <input class="chooseFile" type="file" id="photoInput" accept="image/*" onchange="previewFile()">
+                        <input class="chooseFile" type="file" id="photoInput" accept=".jpg, .png" onchange="previewFile(); checkInput();">
                         <img id="image">
                         <button id="addPhoto" type="button">+ Ajouter photo</button>
-                        <p id="file-size-info">jpg, png : 4mo max</p>
+                        <p id="file-size-info">jpg, png : 4 Mo max</p>
+                        <span id="imageOverSize" class="error"></span>
                     </div>
+                    <span id="imageError" class="error"></span>
                     <label class="titlePhoto" for="title">Titre</label>
-                    <input type="text" name="title" id="title" required>
+                    <input type="text" name="title" id="title" onkeyup="checkInput()" required>
+                    <span id="titleError" class="error"></span>
                     <label class="categoryphoto" for="cat">Catégorie</label>
-                    <select id="cat" required></select>
+                    <select id="cat" onchange="checkInput()" required>
+                        <option value="" class="default-option" disabled selected>Choisir ci-dessous...</option>
+                    </select>
+                    <span id="categoryError" class="error"></span>
                     <hr class="line-modal2">
-                    <input type="submit" value="Valider" id="validPhoto">
+                    <input type="button" value="Valider" id="validPhoto">
+
                 </form>
                 
             </div>`;
 
-            // Ajout des catégories pour assigner une catégorie à la nouvelle image
-            getCategories().then((elements) => {
+             // Ajout des catégories pour assigner une catégorie à la nouvelle image
+             getCategories().then((elements) => {
                 const categoriesDropdown = elements;
                 categoriesDropdown.forEach((element) => {
                   document.getElementById("cat").innerHTML += `<option value="${element.id}">${element.name}</option>`;
                 });
             });
-
 
             document.body.appendChild(modalContent);
             closeModalBtn = modalContent.querySelector(".closeModal");
@@ -232,9 +280,11 @@ if (token && token !== "undefined") {
             backModalEdit(modalBackArrow);
             addImage(sendNewWork);
         });
-    }
+    }        
 
-//// Insertion d'une nouvelle photo ////
+/**
+ * Insertion d'une nouvelle photo
+ */ 
     function previewFile() {
         const preview = document.getElementById("image");
         const file = document.getElementById("photoInput").files[0];
@@ -243,22 +293,135 @@ if (token && token !== "undefined") {
         const reader = new FileReader();
 
         reader.addEventListener("load", function() {
-           // Convertit le fichier image en une chaîne de caractères base64
-           preview.src = reader.result;
+            // Convertit le fichier image en une chaîne de caractères base64
+            preview.src = reader.result;
         }, false);
 
         if (file) {
-            addBtn.style.display = "none";
-            fileSizeInfo.style.display = "none";
-            reader.readAsDataURL(file);
+            const fileSize = file.size;
+            const maxFileSize = 4 * 1024 * 1024; // 4194304 = 4 Mo Conversion de la taille du fichier
+
+            if (
+                (file.type === "image/jpeg" || file.type === "image/png") &&
+                fileSize <= maxFileSize) {    
+                document.getElementById("imageOverSize").textContent = ""; // Efface le message d'erreur s'il existe
+                addBtn.style.display = "none";
+                fileSizeInfo.style.display = "none";
+                document.getElementById("file-size-info").style.display = "none";
+                reader.readAsDataURL(file);
+            } else {
+                document.getElementById("file-size-info").style.display = "none";
+                // Le fichier n'est pas conforme, affichage d'un message d'erreur
+                document.getElementById("imageOverSize").textContent =
+                    "Le fichier doit être au format JPG ou PNG et ne doit pas dépasser 4 Mo.";
+                document.getElementById("photoInput").value = "";
+            }
         }
 
-        const inputPhoto = document.getElementById("photoInput");
-        // Ajout d'un écouteur d'événement "change" pour la séléction de fichier lorsque files change
-        inputPhoto.addEventListener("change", previewFile);
+    const inputPhoto = document.getElementById("photoInput");
+    
+    // Ajout d'un écouteur d'événement "change" pour la séléction de fichier lorsque files change
+    inputPhoto.addEventListener("change", previewFile);
+}
+
+/**
+ * Contrôle des champs du formulaire
+ */
+    function checkInput() {
+        const checkTitle = document.getElementById("title").value;
+        const checkCategory = document.getElementById("cat").value;
+        const checkImageFile = document.getElementById("photoInput").files[0];
+        const validPhotoButton = document.getElementById("validPhoto");
+
+        if(checkTitle.length > 0 && checkCategory && checkImageFile) {
+            validPhotoButton.classList.add("valid-button-green");  
+        } 
     }
 
-//// Retour à modalEdit ////
+/**
+ * Ajout d'une image
+ */
+    async function addImage(sendNewWork) {
+        await sendNewWork.addEventListener("click", async (e) => {
+
+            //Récupérer les valeurs des champs du formulaire
+            const imageFile = document.getElementById("photoInput").files[0];
+            const title = document.getElementById("title").value;
+            const category = document.getElementById("cat").value;
+
+            document.getElementById("imageError").textContent = "";
+            document.getElementById("titleError").textContent = "";
+            document.getElementById("categoryError").textContent = "";
+
+            // Vérification des champs du formulaire
+            if (!imageFile || title === "" || category === "") {
+                if (!imageFile) {
+                    document.getElementById("imageError").textContent = "Veuillez ajouter une photo.";
+                } 
+                if (title === "") {
+                    document.getElementById("titleError").textContent = "Veuillez saisir un titre.";
+                }
+                if (category === "") {
+                    document.getElementById("categoryError").textContent = "Veuillez sélectionner une catégorie.";
+                } 
+            }
+
+            else {
+                const formData = new FormData();
+                formData.append('image', imageFile);
+                formData.append('title', title);
+                formData.append('category', category);
+
+                return await fetch(`http://localhost:5678/api/works`, {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    },
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+
+                    // Ajout de la photo dans la galerie
+                    const newImage = document.createElement("div");
+                    newImage.setAttribute("data-work-id", data.id);
+
+                    newImage.innerHTML = `<figure>
+                        <img src = "${data.imageUrl}">
+                        <figcaption>${data.title}</figcaption>
+                    </figure>`;
+
+                    const refreshGallery = document.querySelector(".gallery");
+                    refreshGallery.appendChild(newImage);
+
+                    // Message de succès
+                    const success = document.createElement("div");
+                    console.log("succès:", success)
+
+                    success.innerHTML = `<div id="toaster">
+                        <span id="toasterMessage">Votre image a bien été ajoutée !</span>
+                        </div>`;
+                    document.body.appendChild(success);
+
+                    setTimeout(function() {
+                        success.remove();
+                    }, 3000);
+
+                })
+                .catch(error => console.log(error)),
+                document.getElementById("photoForm").reset(),
+                document.getElementById("image").src = "",
+                document.getElementById("addPhoto").style ="",
+                document.getElementById("file-size-info").style = "",
+                document.getElementById("validPhoto").style.backgroundColor = "grey";
+            }
+        });
+    };
+
+
+/**
+ * Retour à modalEdit 
+ */ 
     function backModalEdit(modalBackArrow) {
         modalBackArrow.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -266,7 +429,10 @@ if (token && token !== "undefined") {
         });
     }
 
-//// Fermeture de la modale ////
+
+/**
+ * Fermeture de la modale
+ */ 
     function closeModal(closeModalBtn) {
         closeModalBtn.addEventListener("click", () => {
             modalContent.remove();
@@ -277,7 +443,7 @@ if (token && token !== "undefined") {
             if (
                 !modalContent.contains(event.target) &&
                 !modifyProjects.contains(event.target)
-              ) {
+            ) {
                 modalContent.remove();
                 // Supprime l'event "click" une fois la modale fermée
                 document.removeEventListener("click", outsideClickModal);
@@ -288,7 +454,9 @@ if (token && token !== "undefined") {
     }
 
 
-//// Déconnexion et suppression du token ////
+/**
+ *  Déconnexion et suppression du token
+ */
     function logout() {
         logoutLink.addEventListener("click", () => {
             // Supprime le token du sessionStorage
@@ -299,53 +467,4 @@ if (token && token !== "undefined") {
     };
     logout();
 
-
-//// Appels API ////
-
-// API Suppression d'une image //
-async function deleteWorks(workId) {
-        await fetch(`http://localhost:5678/api/works/${workId}`, {
-            method: "DELETE",
-            headers: {
-                "Accept": `*/*`,
-                "Authorization": `Bearer ${token}`
-            }
-        });
-    }
-
-// API Ajout d'une image
-async function addImage(sendNewWork) {
-    sendNewWork.addEventListener("click", async (e) => {
-
-            // Récupération des valeurs des champs du formulaire
-            const imageFile = document.getElementById("photoInput").files[0];
-            const title = document.getElementById("title").value;
-            const category = document.getElementById("cat").value;
-
-            // Vérification des champs du formulaire
-            if (!imageFile || !title || !category) {
-                // Affiche un message d'erreur si le formulaire n'est pas correctement rempli
-                alert("Veuillez remplir tous les champs du formulaire.");
-                return;
-            }
-
-            const formData = new FormData();
-            formData.append("image", imageFile);
-            formData.append("title", title);
-            formData.append("category", category);
-
-            return await fetch(`http://localhost:5678/api/works`, {
-                method: "POST",
-                headers: {
-                    "Authorization" : `Bearer ${token}`
-                },
-                body: formData        
-            })
-            .then(response => response.json())
-            .catch(error => console.log(error))
-    });
-};
-
-
-}// Fermeture if (token) {}
-
+} // Fermeture du if(!token)

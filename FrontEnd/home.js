@@ -18,7 +18,9 @@ categoriesDiv.classList.add("categories");
 h2Element.insertAdjacentElement("afterend", categoriesDiv);
 const projectsCategories = document.querySelector(".categories");
 
-// Affichage des catégories
+/**
+ * Affichage des catégories
+ */ 
 function displayCategories(dataCategories) {
     // Ajout du bouton "tous" dans projectsCategories
     const allCategories = document.createElement("button");
@@ -28,31 +30,57 @@ function displayCategories(dataCategories) {
     
     projectsCategories.appendChild(allCategories);
 
-    // Event au clic sur le bouton Tous
-    allCategories.addEventListener("click", () => {
-        console.log("click tous");
-        getWorks(null);
-    });
+        // Event au clic sur le bouton Tous
+        allCategories.addEventListener("click", () => {
+            console.log("click tous");
+            // Suppression des classes "selected" et "text-white" de tous les boutons de catégorie
+            const categoryButtons = document.querySelectorAll(".buttonCategory");
+            categoryButtons.forEach(button => {
+                button.classList.remove("selected");
+                button.classList.remove("text-white");
+            });
 
-    // Ajout des catégories retournées par l'API
-    dataCategories.forEach(element => {
-        const btnCategory = document.createElement("button"); 
-        btnCategory.classList.add("buttonCategory");
-        btnCategory.innerHTML = `${element.name}`;
+            // Ajout des classes "selected" et "text-white" au bouton "Tous"
+            allCategories.classList.add("selected");
+            allCategories.classList.add("text-white");
 
-        // Ajout au DOM
-        projectsCategories.appendChild(btnCategory);
-
-        btnCategory.addEventListener("click", () => {
-            getWorks(element.id);
+            getWorks(null);
         });
-    });
+
+        dataCategories.forEach(element => {
+            const btnCategory = document.createElement("button"); 
+            btnCategory.classList.add("buttonCategory");
+            btnCategory.innerHTML = `${element.name}`;
+
+            // Ajout au DOM
+            projectsCategories.appendChild(btnCategory);
+
+            btnCategory.addEventListener("click", () => {
+    
+                const categoryButtons = document.querySelectorAll(".buttonCategory");
+                categoryButtons.forEach(button => {
+                    button.classList.remove("selected");
+                    button.classList.remove("text-white");
+                });
+
+                btnCategory.classList.add("selected");
+                btnCategory.classList.add("text-white");
+      
+
+                // Suppression de la classe "text-white" du bouton "Tous"
+                allCategories.classList.remove("text-white");
+
+                getWorks(element.id);
+            });
+        });
 }
 
 
 //// Gestion des projets ////
 
-// Affichage de la liste des projets
+/**
+ * Affichage de la liste des projets
+ */ 
 function displayWorks(dataWorks, categoryID) {
 
     //Réinitialise la liste des projets
@@ -77,7 +105,9 @@ function displayWorks(dataWorks, categoryID) {
     });
 } 
 
-// Gestion du statut de connexion
+/**
+ * Gestion du statut de connexion
+ */ 
     function updateLoginStatus() {
         const token = sessionStorage.getItem("token");
 
@@ -95,7 +125,9 @@ document.addEventListener("DOMContentLoaded", updateLoginStatus);
 
 //// Appels API ////
 
-// Récupération API des catégories
+/**
+ * Récupération API des catégories
+ */ 
 async function getCategories() {
     return await fetch("http://localhost:5678/api/categories")
     .then(response => response.json())
@@ -106,7 +138,10 @@ async function getCategories() {
 }
 getCategories()
 
-// Récupération API des projets
+
+/**
+ * Récupération API des projets
+ */
 async function getWorks (categoryID = null)  { 
     return await fetch("http://localhost:5678/api/works")
     .then(response => response.json())
@@ -116,4 +151,3 @@ async function getWorks (categoryID = null)  {
         });
 };
 getWorks()
-
