@@ -18,6 +18,11 @@ categoriesDiv.classList.add("categories");
 h2Element.insertAdjacentElement("afterend", categoriesDiv);
 const projectsCategories = document.querySelector(".categories");
 
+
+/////
+// FONCTIONS
+/////
+
 /**
  * Affichage des catégories
  */ 
@@ -32,7 +37,6 @@ function displayCategories(dataCategories) {
 
         // Event au clic sur le bouton Tous
         allCategories.addEventListener("click", () => {
-            console.log("click tous");
             // Suppression des classes "selected" et "text-white" de tous les boutons de catégorie
             const categoryButtons = document.querySelectorAll(".buttonCategory");
             categoryButtons.forEach(button => {
@@ -94,9 +98,10 @@ function displayWorks(dataWorks, categoryID) {
             // Définit l'attribut 'data-work-id' de l'élément 'works' sur l'ID du travail en cours 
             works.setAttribute("data-work-id", element.id);
 
-            works.innerHTML = `<figure>
-                <img src = "${element.imageUrl}">
-                <figcaption>${element.title}</figcaption>
+            works.innerHTML = `
+                <figure>
+                    <img src = "${element.imageUrl}">
+                    <figcaption>${element.title}</figcaption>
                 </figure>`;
 
             worksGallery.appendChild(works);
@@ -105,18 +110,18 @@ function displayWorks(dataWorks, categoryID) {
     });
 } 
 
+
 /**
  * Gestion du statut de connexion
  */ 
-    function updateLoginStatus() {
-        const token = sessionStorage.getItem("token");
+function updateLoginStatus() {
+    const token = sessionStorage.getItem("token");
 
-        if (token && token !== "undefined") {
-            loginConnect.textContent = "logout";
-            logoutLink.classList.add("bold-black");
-        }
-        else {
-            loginConnect.textContent = "login";
+    if (token && token !== "undefined") {
+        loginConnect.textContent = "logout";
+        logoutLink.classList.add("bold-black");
+    } else {
+        loginConnect.textContent = "login";
         }
     }
 // Appelle la fonction updateLoginStatus() lors du chargement de la page
@@ -146,8 +151,8 @@ async function getWorks (categoryID = null)  {
     return await fetch("http://localhost:5678/api/works")
     .then(response => response.json())
     .then(dataWorks => {
-            displayWorks(dataWorks, categoryID);
-            return dataWorks;
-        });
+        displayWorks(dataWorks, categoryID);
+        return dataWorks;
+    });
 };
 getWorks()

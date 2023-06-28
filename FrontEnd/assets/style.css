@@ -94,11 +94,11 @@ nav ul {
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
-	cursor: pointer;/****/
+	cursor: pointer;
 }
 
 li:hover {
-	color: #000000;/**avant:color: #B1663C;**/
+	color: #000000;
 	font-weight: bold;
 }
 
@@ -235,7 +235,7 @@ footer nav ul {
 	display: flex;
 	justify-content: flex-end;
 	margin: 2em;
-	background-color: #FFFFFF;  /****/
+	background-color: #FFFFFF;  
 }
 
 /**login_page**/
@@ -313,7 +313,6 @@ footer nav ul {
 	position: relative;
     bottom: 121px;
     left: 31px;
-
 }
 
 .hidden {
@@ -484,7 +483,8 @@ footer nav ul {
 	grid-row-gap: 14px;
 	display: flex;
     flex-wrap: wrap;
-    margin: 46px 105px 47px 105px;
+    /* margin: 46px 105px 47px 105px; */
+	margin: 45px 97px 47px 97px;
 }
 
 .line-modal1 {
