@@ -151,7 +151,7 @@ function modalGallery() {
     getWorks().then(() => {
         const images = worksGallery.querySelectorAll("img");
         // Pour chaque image...
-        images.forEach((element, index) => {
+        images.forEach((element) => {
 
             // Ajout du lien d'édition
             const editLink = document.createElement("div");
@@ -200,7 +200,7 @@ function modalGallery() {
                 moveButton.addEventListener("mouseover", showMoveButton);
                 moveButton.addEventListener("mouseout", hideMoveButton);
                 
-            deleteImage(deleteContainer, index);  
+            deleteImage(deleteContainer);  
         });
     });
 }
@@ -208,14 +208,14 @@ function modalGallery() {
 /**
  * Suppression d'une image
  */ 
-function deleteImage(deleteContainer, index) {
-    deleteContainer.querySelector(".btn-trash").addEventListener("click", async () => {
-        const worksId = worksGallery.querySelectorAll("[data-work-id]");
-        const workId = worksId[index].getAttribute("data-work-id");
-        const removeModal = worksId[index];
+function deleteImage(deleteContainer) {
+    deleteContainer.querySelector(".btn-trash").addEventListener("click", async (e) => {
+        e.currentTarget
+        const removeModal = e.currentTarget.closest(".project");
+        const workId = removeModal.getAttribute("data-work-id");
         const removeGallery = document.querySelector(`div[data-work-id="${workId}"]`);
 
-        return await fetch(`http://localhost:5678/api/works/${workId}`, {
+        await fetch(`http://localhost:5678/api/works/${workId}`, {
             method: "DELETE",
             headers: {
                 "Accept": `*/*`,

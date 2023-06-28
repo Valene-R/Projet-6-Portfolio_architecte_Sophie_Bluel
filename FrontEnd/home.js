@@ -97,6 +97,7 @@ function displayWorks(dataWorks, categoryID) {
 
             // Définit l'attribut 'data-work-id' de l'élément 'works' sur l'ID du travail en cours 
             works.setAttribute("data-work-id", element.id);
+            works.classList.add("project");
 
             works.innerHTML = `
                 <figure>
