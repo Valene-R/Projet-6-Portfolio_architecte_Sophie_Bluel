@@ -123,8 +123,8 @@ function updateLoginStatus() {
         logoutLink.classList.add("bold-black");
     } else {
         loginConnect.textContent = "login";
-        }
     }
+}
 // Appelle la fonction updateLoginStatus() lors du chargement de la page
 document.addEventListener("DOMContentLoaded", updateLoginStatus);
 

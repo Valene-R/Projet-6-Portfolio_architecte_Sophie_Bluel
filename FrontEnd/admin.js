@@ -12,26 +12,24 @@ const categoriesElement = document.querySelector(".categories");
 const bodyElement = document.querySelector("body");
 
 // Création du DOM
-    // Admin header
+// Admin header
 const headerDiv = document.createElement("div");
 const publishChanges = document.createElement("button");
 const modeEdition = document.createElement("a");
-    // Admin features
+// Admin features
 const modifyPhoto = document.createElement("a");
 const modifyProjects = document.createElement("a");
 const modalContent = document.createElement("div");
 let closeModalBtn = null;
-
 
 /////
 // FONCTIONS
 /////
 
 /**
- * Utilisateur connecté 
+ * Utilisateur connecté
  */
 function isLogin() {
-    const token = sessionStorage.getItem("token");
     return token && token !== "undefined";
 }
 
@@ -59,7 +57,6 @@ function displayAdminButtons() {
 
     // Modification de la photo
     modifyPhoto.classList.add("modifyPhoto");
-    modifyPhoto.classList.remove("hidden");
     modifyPhoto.innerHTML = `
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
             <path d="M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1 377.9 88 407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9 390.1 168 255.8 302.2c-2.9 2.9-6.5 5-10.4 6.1l-58.5 16.7 16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25C446.8-3.1 401.2-3.1 373.1 25zM88 64C39.4 64 0 103.4 0 152V424c0 48.6 39.4 88 88 88H360c48.6 0 88-39.4 88-88V312c0-13.3-10.7-24-24-24s-24 10.7-24 24V424c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V152c0-22.1 17.9-40 40-40H200c13.3 0 24-10.7 24-24s-10.7-24-24-24H88z"/>
@@ -69,7 +66,6 @@ function displayAdminButtons() {
 
     // Modification de la galerie
     modifyProjects.classList.add("modifyProjects");
-    modifyProjects.classList.remove("hidden");
     modifyProjects.innerHTML = `
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
             <path d="M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1 377.9 88 407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9 390.1 168 255.8 302.2c-2.9 2.9-6.5 5-10.4 6.1l-58.5 16.7 16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25C446.8-3.1 401.2-3.1 373.1 25zM88 64C39.4 64 0 103.4 0 152V424c0 48.6 39.4 88 88 88H360c48.6 0 88-39.4 88-88V312c0-13.3-10.7-24-24-24s-24 10.7-24 24V424c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V152c0-22.1 17.9-40 40-40H200c13.3 0 24-10.7 24-24s-10.7-24-24-24H88z"/>
@@ -80,14 +76,14 @@ function displayAdminButtons() {
 
 /**
  * Désaffichage des catégories
- */ 
+ */
 function hideCategories() {
     categoriesDiv.remove();
 }
 
 /**
- * Loader 
- */ 
+ * Loader
+ */
 function showLoader() {
     const loaderContainer = document.querySelector(".loader-container");
     loaderContainer.style.display = "block";
@@ -95,7 +91,7 @@ function showLoader() {
 
 /**
  * Création de la modale d'édition
- */ 
+ */
 function modalEdit() {
     bodyElement.classList.add("opacity");
     modalContent.innerHTML = `
@@ -116,14 +112,14 @@ function modalEdit() {
             </div>
             <div class="modal-gallery"></div>
             <div class="modal-actions">
-            <hr class="line-modal1">
-            <input type="button" value="Ajouter une photo" id="sendPhoto">
-            <p class="delete-gallery">Supprimer la galerie</p>
+                <hr class="line-modal1">
+                <input type="button" value="Ajouter une photo" id="sendPhoto">
+                <p class="delete-gallery">Supprimer la galerie</p>
             </div>
     
         </div>`;
     document.body.appendChild(modalContent);
-    
+
     const sendPhotoInput = document.querySelector("#sendPhoto");
     closeModalBtn = modalContent.querySelector(".closeModal");
 
@@ -134,7 +130,7 @@ function modalEdit() {
 
 /**
  * Ouverture de la modale
- */ 
+ */
 function openModal() {
     modifyProjects.addEventListener("click", () => {
         modalEdit();
@@ -142,8 +138,8 @@ function openModal() {
 }
 
 /**
- * Affichage de la galerie dans la modale 
- */ 
+ * Affichage de la galerie dans la modale
+ */
 function modalGallery() {
     // Récupération de la galerie
     worksGallery = document.querySelector(".modal-gallery");
@@ -181,39 +177,39 @@ function modalGallery() {
             // Insertion de deleteContainer juste avant l'élément image
             element.insertAdjacentElement("beforebegin", deleteContainer);
 
-                // Cache le bouton de déplacement au départ
-                const moveButton = deleteContainer.querySelector(".move");
+            // Cache le bouton de déplacement au départ
+            const moveButton = deleteContainer.querySelector(".move");
+            moveButton.style.opacity = 0;
+
+            // Gestion des événements de souris pour afficher/masquer le bouton de déplacement
+            function showMoveButton() {
+                moveButton.style.opacity = 1;
+            }
+
+            function hideMoveButton() {
                 moveButton.style.opacity = 0;
+            }
 
-                // Gestion des événements de souris pour afficher/masquer le bouton de déplacement
-                function showMoveButton() {
-                    moveButton.style.opacity = 1;
-                };
+            // Gestion des écouteurs d'événements de souris à l'image, au bouton et à la div de déplacement
+            element.addEventListener("mouseover", showMoveButton);
+            element.addEventListener("mouseout", hideMoveButton);
+            moveButton.addEventListener("mouseover", showMoveButton);
+            moveButton.addEventListener("mouseout", hideMoveButton);
 
-                function hideMoveButton() {
-                    moveButton.style.opacity = 0;
-                };
-
-                // Gestion des écouteurs d'événements de souris à l'image, au bouton et à la div de déplacement
-                element.addEventListener("mouseover", showMoveButton);
-                element.addEventListener("mouseout", hideMoveButton);
-                moveButton.addEventListener("mouseover", showMoveButton);
-                moveButton.addEventListener("mouseout", hideMoveButton);
-                
-            deleteImage(deleteContainer);  
+            deleteImage(deleteContainer);
         });
     });
 }
 
 /**
  * Suppression d'une image
- */ 
+ */
 function deleteImage(deleteContainer) {
     deleteContainer.querySelector(".btn-trash").addEventListener("click", async (e) => {
-        e.currentTarget
-        const removeModal = e.currentTarget.closest(".project");
-        const workId = removeModal.getAttribute("data-work-id");
-        const removeGallery = document.querySelector(`div[data-work-id="${workId}"]`);
+        e.currentTarget;
+        const removeImageModal = e.currentTarget.closest(".project");
+        const workId = removeImageModal.getAttribute("data-work-id");
+        const removeImageGallery = document.querySelector(`div[data-work-id="${workId}"]`);
 
         await fetch(`http://localhost:5678/api/works/${workId}`, {
             method: "DELETE",
@@ -222,15 +218,15 @@ function deleteImage(deleteContainer) {
                 "Authorization": `Bearer ${token}`
             }
         }),
-        
-        removeModal.remove(),
-        removeGallery.remove();
+
+        removeImageModal.remove(),
+        removeImageGallery.remove();
     });
 }
 
 /**
  * Modal d'ajout d'une nouvelle photo
- */  
+ */
 function addNewPhoto(sendPhotoInput) {
     sendPhotoInput.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -277,7 +273,7 @@ function addNewPhoto(sendPhotoInput) {
         getCategories().then((elements) => {
             const categoriesDropdown = elements;
             categoriesDropdown.forEach((element) => {
-              document.getElementById("cat").innerHTML += `<option value="${element.id}">${element.name}</option>`;
+                document.getElementById("cat").innerHTML += `<option value="${element.id}">${element.name}</option>`;
             });
         });
 
@@ -290,11 +286,11 @@ function addNewPhoto(sendPhotoInput) {
         backModalEdit(modalBackArrow);
         addImage(sendNewWork);
     });
-}        
+}
 
 /**
  * Insertion d'une nouvelle photo
- */ 
+ */
 function previewFile() {
     const preview = document.getElementById("image");
     const file = document.getElementById("photoInput").files[0];
@@ -302,10 +298,12 @@ function previewFile() {
     const fileSizeInfo = document.getElementById("file-size-info");
     const reader = new FileReader();
 
-    reader.addEventListener("load", function() {
-        // Convertit le fichier image en une chaîne de caractères base64
-        preview.src = reader.result;
-    }, false);
+    reader.addEventListener("load", function () {
+            // Convertit le fichier image en une chaîne de caractères base64
+            preview.src = reader.result;
+        },
+        false
+    );
 
     if (file) {
         const fileSize = file.size;
@@ -313,7 +311,8 @@ function previewFile() {
 
         if (
             (file.type === "image/jpeg" || file.type === "image/png") &&
-            fileSize <= maxFileSize) {    
+            fileSize <= maxFileSize
+        ) {
             document.getElementById("imageOverSize").textContent = ""; // Efface le message d'erreur s'il existe
             addBtn.style.display = "none";
             fileSizeInfo.style.display = "none";
@@ -341,10 +340,9 @@ function checkInput() {
     const checkCategory = document.getElementById("cat").value;
     const checkImageFile = document.getElementById("photoInput").files[0];
 
-    if(checkTitle.length > 0 && checkCategory && checkImageFile) {
+    if (checkTitle.length > 0 && checkCategory && checkImageFile) {
         document.getElementById("validPhoto").classList.add("valid-button-green");
-        
-    } 
+    }
 }
 
 /**
@@ -352,7 +350,6 @@ function checkInput() {
  */
 async function addImage(sendNewWork) {
     await sendNewWork.addEventListener("click", async () => {
-
         //Récupérer les valeurs des champs du formulaire
         const imageFile = document.getElementById("photoInput").files[0];
         const title = document.getElementById("title").value;
@@ -366,20 +363,20 @@ async function addImage(sendNewWork) {
         if (!imageFile || title === "" || category === "") {
             if (!imageFile) {
                 document.getElementById("imageError").textContent = "Veuillez ajouter une photo.";
-            } 
+            }
             if (title === "") {
                 document.getElementById("titleError").textContent = "Veuillez saisir un titre.";
             }
             if (category === "") {
                 document.getElementById("categoryError").textContent = "Veuillez sélectionner une catégorie.";
-            } 
-        }
-
+            }
+        } 
+        
         else {
             const formData = new FormData();
-            formData.append('image', imageFile);
-            formData.append('title', title);
-            formData.append('category', category);
+            formData.append("image", imageFile);
+            formData.append("title", title);
+            formData.append("category", category);
 
             return await fetch(`http://localhost:5678/api/works`, {
                 method: "POST",
@@ -413,24 +410,23 @@ async function addImage(sendNewWork) {
                     </div>`;
                 document.body.appendChild(success);
 
-                setTimeout(function() {
+                setTimeout(function () {
                     success.remove();
                 }, 3000);
-
             })
             .catch(error => console.log(error)),
             document.getElementById("photoForm").reset(),
             document.getElementById("image").src = "",
             document.getElementById("addPhoto").style = "",
             document.getElementById("file-size-info").style = "",
-            document.getElementById("validPhoto").classList.remove("valid-button-green");
+            document.getElementById("validPhoto").classList.remove("valid-button-green")
         }
     });
-};
+}
 
 /**
-* Retour à modalEdit 
-*/ 
+ * Retour à modalEdit
+ */
 function backModalEdit(modalBackArrow) {
     modalBackArrow.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -440,30 +436,30 @@ function backModalEdit(modalBackArrow) {
 
 /**
  * Fermeture de la modale
- */ 
+ */
 function closeModal(closeModalBtn) {
     closeModalBtn.addEventListener("click", () => {
         modalContent.remove();
         bodyElement.classList.remove("opacity");
     });
 
-const outsideClickModal = (event) => {
-    if (
-        !modalContent.contains(event.target) &&
-        !modifyProjects.contains(event.target)
-        ) {
-        modalContent.remove();
-        // Supprime l'event "click" une fois la modale fermée
-        document.removeEventListener("click", outsideClickModal);
-        bodyElement.classList.remove("opacity");
+    const outsideClickModal = (event) => {
+        if (
+            !modalContent.contains(event.target) &&
+            !modifyProjects.contains(event.target)
+            ) {
+            modalContent.remove();
+            // Supprime l'event "click" une fois la modale fermée
+            document.removeEventListener("click", outsideClickModal);
+            bodyElement.classList.remove("opacity");
         }
     };
     document.addEventListener("click", outsideClickModal);
 }
 
 /**
-*  Déconnexion et suppression du token
-*/
+ *  Déconnexion et suppression du token
+ */
 function logoutEvent() {
     logoutLink.addEventListener("click", () => {
         // Supprime le token du sessionStorage
@@ -473,16 +469,14 @@ function logoutEvent() {
     });
 }
 
-
 /////
 // Condition utilisateur connecté
 /////
 
-if(isLogin()) {
+if (isLogin()) {
     displayAdminButtons();
     hideCategories();
     // openModal => modalEdit => modalGallery/deleteImage/closeModal/addNewPhoto => checkInput/previewFile/backModalEdit/closeModal/addImage
     openModal();
     logoutEvent();
 }
-

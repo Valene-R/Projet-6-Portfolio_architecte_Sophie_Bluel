@@ -3,87 +3,19 @@
    License: none (public domain)
 */
 
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre, 
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -93,17 +25,8 @@ video {
 }
 
 /* HTML5 display-role reset for older browsers */
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section {
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 
@@ -111,20 +34,16 @@ body {
 	line-height: 1;
 }
 
-ol,
-ul {
+ol, ul {
 	list-style: none;
 }
 
-blockquote,
-q {
+blockquote, q {
 	quotes: none;
 }
 
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
+blockquote:before, blockquote:after,
+q:before, q:after {
 	content: '';
 	content: none;
 }
@@ -162,7 +81,7 @@ h1 {
 	color: #B1663C
 }
 
-h1>span {
+h1 > span {
 	font-family: 'Work Sans';
 	font-size: 10px;
 	letter-spacing: 0.1em;
@@ -289,7 +208,7 @@ li:hover {
 	margin: auto;
 }
 
-#contact>* {
+#contact > * {
 	text-align: center;
 
 }
@@ -382,8 +301,7 @@ footer nav ul {
 }
 
 
-#email,
-#pass {
+#email, #pass {
 	height: 50px;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
@@ -737,8 +655,7 @@ body.opacity::before {
 	margin: 9px 105px 47px 105px;
 }
 
-.titlePhoto,
-.categoryphoto {
+.titlePhoto, .categoryphoto {
 	width: 32px;
 	height: 16px;
 	color: #3D3D3D;
@@ -746,8 +663,7 @@ body.opacity::before {
 	padding: 21px 0 10px 0;
 }
 
-#cat,
-#title {
+#cat, #title {
 	width: 420px;
 	height: 51px;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);

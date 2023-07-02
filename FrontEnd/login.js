@@ -44,8 +44,8 @@ function sendData() {
         if (!token) {
             //return console.log("identifants invalides");
             errorMessage.textContent = "Erreur dans l'identifiant ou le mot de passe"; // Afficher le message d'erreur
-            errorMessage.classList.add("visible"); // Ajoute la classe pour afficher la bulle d'erreur
-            errorMessage.classList.remove("hidden"); // Affiche le message d'erreur en supprimant la classe
+            errorMessage.classList.add("visible"); // Ajoute la classe pour afficher le message d'erreur
+            errorMessage.classList.remove("hidden"); // Supprime la classe pour afficher le message d'erreur
         } else {
             // Redirection vers la page d'accueil  
             return window.location.href = "index.html"
@@ -61,7 +61,7 @@ form.addEventListener("submit", (e) => {
 
 // EventListener pour masquer le message d'erreur lors de la saisie
 form.addEventListener("input", () => {
-    // Suppression la classe "visible" pour masquer la bulle du message d'erreur
+    // Suppression la classe "visible" pour masquer le message d'erreur
     errorMessage.classList.remove("visible");
     // Ajout de la classe "hidden" pour masquer le message d'erreur
     errorMessage.classList.add("hidden");
