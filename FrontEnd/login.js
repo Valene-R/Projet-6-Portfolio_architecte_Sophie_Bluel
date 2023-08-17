@@ -42,7 +42,6 @@ function sendData() {
 
         // Condition pour validation ou non des identifiants de connexion
         if (!token) {
-            //return console.log("identifants invalides");
             errorMessage.textContent = "Erreur dans l'identifiant ou le mot de passe"; // Afficher le message d'erreur
             errorMessage.classList.add("visible"); // Ajoute la classe pour afficher le message d'erreur
             errorMessage.classList.remove("hidden"); // Supprime la classe pour afficher le message d'erreur

@@ -306,6 +306,7 @@ footer nav ul {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 	gap: 7px;
+	padding-left: 6px;
 }
 
 .labelLogin {
@@ -670,6 +671,10 @@ body.opacity::before {
 	border: none;
 }
 
+#title {
+	padding-left: 5px;
+}
+
 #imageOverSize {
 	font-variant-caps: all-small-caps;
 	color: #FF0000;
@@ -731,7 +736,7 @@ body.opacity::before {
 	background-color: #E5E5E5;
 	z-index: 9999;
 	pointer-events: none;
-	animation: containerLoader 3s 2s linear forwards;
+	animation: containerLoader 3s 3s linear forwards;
 }
 
 @keyframes containerLoader {

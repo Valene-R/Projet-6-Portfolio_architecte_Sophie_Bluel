@@ -84,9 +84,30 @@ function hideCategories() {
 /**
  * Loader
  */
-function showLoader() {
-    const loaderContainer = document.querySelector(".loader-container");
-    loaderContainer.style.display = "block";
+function showLoader(width, height, includeLoadingText = true) {
+    const loaderContainer = document.createElement("div");
+    loaderContainer.classList.add("loader-container");
+    loaderContainer.style.width = width; // Définir la largeur
+    loaderContainer.style.height = height; // Définir la hauteur
+
+    const loader = document.createElement("div");
+    loader.classList.add("loader");
+
+    if (includeLoadingText) {
+        const loadingText = document.createElement("div");
+        loadingText.classList.add("loading-text");
+        loadingText.textContent = "Loading";
+
+    const loadingDots = document.createElement("span");
+    loadingDots.id = "loading-dots";
+
+    loadingText.appendChild(loadingDots);
+    loaderContainer.appendChild(loadingText);
+    }
+
+    loaderContainer.appendChild(loader);
+
+    return loaderContainer;
 }
 
 /**
@@ -97,12 +118,7 @@ function modalEdit() {
     modalContent.innerHTML = `
         <div class="modal-dialog"> 
 
-            <div class="loader-container">
-                <div class="loader"></div>
-                <div class="loading-text">Loading
-                    <span id="loading-dots"></span>
-                </div>
-            </div>
+        ${showLoader().outerHTML}
 
             <div class="modal-top">
                 <svg class="icon-cross closeModal" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
@@ -298,10 +314,25 @@ function previewFile() {
     const fileSizeInfo = document.getElementById("file-size-info");
     const reader = new FileReader();
 
+    const loaderContainer = showLoader(420, 169, false); // loader avec les dimensions spécifiques
+
+    // Applique les styles CSS pour centrer le loader
+    loaderContainer.style.position = "absolute";
+    loaderContainer.style.display = "flex";
+    loaderContainer.style.justifyContent = "center";
+
+    // Réinitialise la source de l'image à une valeur vide
+    preview.src = '';
+ 
+    // Insère le loader dans le DOM après l'élément input file
+    preview.insertAdjacentElement("afterend", loaderContainer);
+
     reader.addEventListener("load", function () {
             // Convertit le fichier image en une chaîne de caractères base64
             preview.src = reader.result;
-        },
+            // Supprime le loader une fois le chargement du fichier terminé
+            document.querySelector(".loader-container").remove();
+        }, 
         false
     );
 
