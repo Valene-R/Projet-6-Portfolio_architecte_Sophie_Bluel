@@ -324,7 +324,7 @@ function previewFile() {
     // Réinitialise la source de l'image à une valeur vide
     preview.src = '';
  
-    // Insère le loader dans le DOM après l'élément input file
+    // Insère le loader dans le DOM après l'élément preview
     preview.insertAdjacentElement("afterend", loaderContainer);
 
     reader.addEventListener("load", function () {
@@ -345,6 +345,7 @@ function previewFile() {
             fileSize <= maxFileSize
         ) {
             document.getElementById("imageOverSize").textContent = ""; // Efface le message d'erreur s'il existe
+            document.getElementById("imageError").textContent = ""; // Supprime le message d'erreur pour l'image
             addBtn.style.display = "none";
             fileSizeInfo.style.display = "none";
             document.getElementById("file-size-info").style.display = "none";
@@ -371,8 +372,19 @@ function checkInput() {
     const checkCategory = document.getElementById("cat").value;
     const checkImageFile = document.getElementById("photoInput").files[0];
 
+    const activeInput = document.activeElement; // Champ en cours de saisie
+
+    // Efface le message d'erreur associé au champ en cours de saisie
+    if (activeInput.id === "title") {
+        document.getElementById("titleError").textContent = "";
+    } else if (activeInput.id === "cat") {
+        document.getElementById("categoryError").textContent = "";
+    }
+
     if (checkTitle.length > 0 && checkCategory && checkImageFile) {
         document.getElementById("validPhoto").classList.add("valid-button-green");
+    } else {
+        document.getElementById("validPhoto").classList.remove("valid-button-green");
     }
 }
 
@@ -385,10 +397,6 @@ async function addImage(sendNewWork) {
         const imageFile = document.getElementById("photoInput").files[0];
         const title = document.getElementById("title").value;
         const category = document.getElementById("cat").value;
-
-        document.getElementById("imageError").textContent = "";
-        document.getElementById("titleError").textContent = "";
-        document.getElementById("categoryError").textContent = "";
 
         // Vérification des champs du formulaire
         if (!imageFile || title === "" || category === "") {
